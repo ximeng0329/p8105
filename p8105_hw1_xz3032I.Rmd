@@ -1,0 +1,70 @@
+---
+title: "Homework 1 ximeng"
+output: html_document
+---
+
+Import the library tideverse
+```{r}
+library(tidyverse)
+```
+
+# problem 1
+
+#Fisrt create a data frame
+```{r}
+problem1_df=tibble(
+  samp = rnorm(10),
+  logic_vec = samp>0,
+  char_vec = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
+  fac_vec = factor(c("s", "s", "s", "m", "m", "m", "m", "l", "l", "l"))
+)
+```
+ 
+# try to take the mean of each variable
+
+```{r}
+mean(problem1_df$samp)
+mean(problem1_df$logic_vec)
+mean(problem1_df$char_vec)
+mean(problem1_df$fac_vec)
+```
+
+# covert variables to another type
+
+```{r}
+integer = as.integer(as.logical(problem1_df$logic_vec))
+integer * problem1_df$samp
+fact = as.factor(as.logical(problem1_df$logic_vec))
+fact * problem1_df$samp
+numb = as.numeric(as.factor(as.logical(problem1_df$logic_vec)))
+numb * problem1_df$samp
+```
+
+# problem 2
+
+
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+# short describtion
+
+The data set includes variables `r names(penguins)`.  The data set has `r nrow(penguins)` 
+rows and `r ncol(penguins)` columns.  The mean of flipper length is 
+`r mean(penguins$flipper_length_mm)` mm.  
+
+
+
+# Construct a scatterplot: flipper length (mm) vs bill length (mm), colored by species
+
+
+```{r}
+library(ggplot2)
+ggplot(penguins, aes(x= flipper_length_mm, y= bill_length_mm, color = as.factor(species))) + geom_point()
+```
+
+#Save the plot
+
+```{r}
+ggsave("penguins.png", width = 30, height = 30)
+```
